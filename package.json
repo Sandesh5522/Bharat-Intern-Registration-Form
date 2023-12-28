@@ -1,0 +1,23 @@
+{
+  "name": "bharat-intern-registration-form",
+  "version": "1.0.0",
+  "description": "Registration form project in Node.js MongoDB, HTML AND CSS.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sandesh5522/Bharat-Intern-Registration-Form.git"
+  },
+  "author": "Sandesh Sutar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sandesh5522/Bharat-Intern-Registration-Form/issues"
+  },
+  "homepage": "https://github.com/Sandesh5522/Bharat-Intern-Registration-Form#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "twilio": "^4.20.0"
+  }
+}
