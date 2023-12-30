@@ -1,5 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const { MongoClient } = requiere('mongodb');
+const uri = "mongodb+srv://<user>:<password>@<cluster-url>?w=majority";
+const client = new MongoClient(uri);
 const path = require('path');
 const app = express();
 const port = 3000;
