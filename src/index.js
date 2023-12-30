@@ -7,6 +7,19 @@ const path = require('path');
 const app = express();
 const port = 3000;
 
+async function run() {
+    try {
+        await client.connect();
+        const db = client.db("myDatabase");
+        const result = await db.getCollection('user').find({});
+        console.log(result);
+    }
+    finally {
+        await client.close();
+    }
+}
+run().catch(console.dir);
+
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req,res) => {
