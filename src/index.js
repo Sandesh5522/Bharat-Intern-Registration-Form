@@ -11,18 +11,19 @@ async function run() {
     try {
         await client.connect();
         const db = client.db("nodereg");
-        const result = db.collection("coll01").find({}).toArray();
+        const result = db.collection("coll02").find({}).toArray();
         console.log(result);
     }
     finally {
-        await client.close();
+        setTimeout(() => {client.close()}, 1500);
+        // await client.close();
     }
 }
 run().catch(console.dir);
 
 function addData(db, body) {
     var dataobj = { name: body.uname, phone: body.uphone, password: body.upassword };
-    var result = db.collection("coll01").insertOne(dataobj, function(err, res) {
+    var result = db.collection("coll02").insertOne(dataobj, function(err, res) {
         if (err) throw err;
         console.log("data inserted.");
         db.close();

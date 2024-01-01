@@ -44,3 +44,64 @@ admin     40.00 KiB
 config   108.00 KiB
 local     92.00 KiB
 nodereg   40.00 KiB
+
+
+Mongoose commands:
+To start in a cmd
+node --experimental-repl-await
+
+mongoose.connect('mongodb://localhost:27017/newnode')
+
+> const nodeschema = new mongoose.Schema({
+... name: String,
+... phone: Number
+... })
+
+const one = mongoose.model('model01', nodeschema)
+
+> one
+Model { model01 }
+> const sam = new one({
+... name: "name01",
+... phone: 68495
+... })
+undefined
+> sam
+{
+  name: 'name01',
+  phone: 68495,
+  _id: new ObjectId('65931e006156d67f835e3665')
+}
+> await sam.save()
+{
+  name: 'name01',
+  phone: 68495,
+  _id: new ObjectId('65931e006156d67f835e3665'),
+  __v: 0
+}
+> await one.find()
+[  
+  {
+    _id: new ObjectId('65931e006156d67f835e3665'),
+    name: 'name01',
+    phone: 68495,
+    __v: 0
+  }
+]
+> await one.findById('65931e006156d67f835e3665')
+{
+  _id: new ObjectId('65931e006156d67f835e3665'),
+  name: 'name01',
+  phone: 68495,
+  __v: 0
+}
+> await one.find({name:"name01"})
+[
+  {
+    _id: new ObjectId('65931e006156d67f835e3665'),
+    name: 'name01',
+    phone: 68495,
+    __v: 0
+  }
+]
+>
