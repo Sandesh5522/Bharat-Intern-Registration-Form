@@ -47,8 +47,12 @@ nodereg   40.00 KiB
 
 
 Mongoose commands:
-To start in a cmd
+To start in a cmd use:
 node --experimental-repl-await
+
+const mongoose = require('mongoose')
+
+mongooose
 
 mongoose.connect('mongodb://localhost:27017/newnode')
 
