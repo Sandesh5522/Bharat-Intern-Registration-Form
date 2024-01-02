@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { MongoClient } = require('mongodb');
+const validator = require("email-validator");
 const uri = "mongodb://localhost:27017";
 const client = new MongoClient(uri);
 const path = require('path');
@@ -22,7 +23,10 @@ async function run() {
 run().catch(console.dir);
 
 function addData(db, body) {
-    var dataobj = { name: body.uname, phone: body.uphone, password: body.upassword };
+    if (validator.validate(body.uemail)){
+        console.log("Ok email.");
+    }
+    var dataobj = { name: body.uname, phone: body.uphone, email: body.uemail, password: body.upassword };
     var result = db.collection("coll02").insertOne(dataobj, function(err, res) {
         if (err) throw err;
         console.log("data inserted.");
@@ -40,7 +44,7 @@ app.get('/', (req,res) => {
 app.post('/send', (req,res) => {
     client.connect();
     const db = client.db("nodereg");
-    console.log(req.body.uname, req.body.uphone, req.body.upassword);
+    console.log(req.body.uname, req.body.uphone, req.body.uemail, req.body.upassword);
     addData(db, req.body);
 });
 
