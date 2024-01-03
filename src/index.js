@@ -5,6 +5,7 @@ const validator = require("email-validator");
 const uri = "mongodb://localhost:27017";
 const client = new MongoClient(uri);
 const path = require('path');
+const { Redirect } = require('twilio/lib/twiml/VoiceResponse');
 const app = express();
 const port = 3000;
 
@@ -23,9 +24,6 @@ async function run() {
 run().catch(console.dir);
 
 function addData(db, body) {
-    if (validator.validate(body.uemail)){
-        console.log("Ok email.");
-    }
     var dataobj = { name: body.uname, phone: body.uphone, email: body.uemail, password: body.upassword };
     var result = db.collection("coll02").insertOne(dataobj, function(err, res) {
         if (err) throw err;
@@ -34,10 +32,10 @@ function addData(db, body) {
     });
 }
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }), express.static('public'));
 
 app.get('/', (req,res) => {
-    const filePath = path.resolve(__dirname, 'home.html');
+    const filePath = path.resolve('views', 'home.html');
     res.sendFile(filePath);
 });
 
@@ -46,6 +44,12 @@ app.post('/send', (req,res) => {
     const db = client.db("nodereg");
     console.log(req.body.uname, req.body.uphone, req.body.uemail, req.body.upassword);
     addData(db, req.body);
+    res.redirect('/send');// try sending registeration details.
+});
+
+app.get('/send', (req,res) => {
+    const resFile = path.resolve('views','res.html');
+    res.sendFile(resFile);
 });
 
 app.listen(port, () => {
