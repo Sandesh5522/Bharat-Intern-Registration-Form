@@ -55,6 +55,23 @@
             border-color: #004bbd;
         }
 
+        [type="button"] {
+            background: #00c95a;
+            color: black;
+            border: 1px solid rgba(0, 0, 0, 0.175);
+            border-radius: 3px;
+            padding: 12px 0;
+            cursor: pointer;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            margin-top: 5px;
+            font-weight: bold;
+            width: 100%;
+        }
+
+        [type="button"]:hover {
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+
         [type="submit"] {
             background: #00c95a;
             color: black;
@@ -80,27 +97,21 @@
             $("input").hide();
             $(document.body).fadeIn(500);
             $("input").fadeIn(1500);
-            $("regform").validate({
-                rules: {
-                    password:{
-                        minlength: 6,
-                        maxlength: 12
-                    }
-                }
-            });
         });
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Register</title>
 </head>
 <body>
     <form action="/send" method="POST" id="regform" class="container">
-    <input type="text" name="uname" placeholder="Name" required>
-    <input type="text" name="uphone" placeholder="Phone" required>
-    <input type="email" name="uemail" placeholder="Email" required>
-    <input type="password" name="upassword" placeholder="Password" required>
-    <input type="submit">
+        <h2>Register</h2>
+        <input type="text" name="uname" placeholder="Name" required>
+        <input type="number" name="uphone" placeholder="Phone" required>
+        <input type="email" name="uemail" placeholder="Email" required>
+        <input type="password" name="upassword" placeholder="Password" required>
+        <input type="submit" value="Submit">
+        <button type="button" onclick="window.location='/'">Login</button>
     </form>
 </body>
 </html>

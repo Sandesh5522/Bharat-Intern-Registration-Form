@@ -35,8 +35,20 @@ function addData(db, body) {
 app.use(bodyParser.urlencoded({ extended: true }), express.static('public'));
 
 app.get('/', (req,res) => {
-    const filePath = path.resolve('views', 'home.html');
+    const loginPage = path.resolve('views', 'login.html');
+    res.sendFile(loginPage);
+});
+
+app.get('/register', (req,res) => {
+    const filePath = path.resolve('views', 'register.html');
     res.sendFile(filePath);
+});
+
+app.post('/', (req,res) => {
+    client.connect();
+    const db = client.db("nodereg");
+    const result = db.find(db, {"email":req.body.uemail,"password":req.body.upassword});
+    console.log(result);
 });
 
 app.post('/send', (req,res) => {
