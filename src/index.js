@@ -30,6 +30,7 @@ function addData(db, body) {
         console.log("data inserted.");
         db.close();
     });
+    console.log("Added data:"+result);
 }
 
 app.use(bodyParser.urlencoded({ extended: true }), express.static('public'));
@@ -47,7 +48,7 @@ app.get('/register', (req,res) => {
 app.post('/', (req,res) => {
     client.connect();
     const db = client.db("nodereg");
-    const result = db.find(db, {"email":req.body.uemail,"password":req.body.upassword});
+    const result = db.collection("coll02").find({"email":req.body.uemail,"password":req.body.upassword}).toArray();
     console.log(result);
 });
 
