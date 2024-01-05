@@ -30,7 +30,7 @@ function addData(db, body) {
         console.log("data inserted.");
         db.close();
     });
-    console.log("Added data:"+result);
+    // console.log("Added data:"+body);
 }
 
 app.use(bodyParser.urlencoded({ extended: true }), express.static('public'));
@@ -49,19 +49,25 @@ app.post('/', (req,res) => {
     client.connect();
     const db = client.db("nodereg");
     const result = db.collection("coll02").find({"email":req.body.uemail,"password":req.body.upassword}).toArray();
-    console.log(result);
+    // console.log(result);
+    res.render('res.html',{bodyData:[req.body.uname,req.body.uphone,req.body.uemail,req.body.upassword]});
 });
 
-app.post('/send', (req,res) => {
+app.engine('html', require('ejs').renderFile);
+app.post('/register', (req,res) => {
     client.connect();
     const db = client.db("nodereg");
-    console.log(req.body.uname, req.body.uphone, req.body.uemail, req.body.upassword);
+    // console.log(req.body.uname, req.body.uphone, req.body.uemail, req.body.upassword);
     addData(db, req.body);
-    res.redirect('/send');// try sending registeration details.
+    // res.redirect('/sent');// try sending registeration details.
+    // res.render(__dirname,'/views/res.html',JSON.stringify({name:req.body}));
+    res.render('res.html',{bodyData:[req.body.uname,req.body.uphone,req.body.uemail,req.body.upassword]});
 });
 
-app.get('/send', (req,res) => {
+app.get('/sent', (req,res) => {
     const resFile = path.resolve('views','res.html');
+    // res.sendFile(resFile);
+    // hpd = html.toString().replace("DATA", JSON.stringify(data))
     res.sendFile(resFile);
 });
 
