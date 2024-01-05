@@ -105,6 +105,14 @@
             $("input").hide();
             $(document.body).fadeIn(500);
             $("input").fadeIn(1500);
+            $("#upassword").hover(
+                function() {
+                    $("#upassword").attr('type',"text");
+                },
+                function() {
+                    $("#upassword").attr('type',"password");
+                }
+            );
         });
     </script>
     <title>Register</title>
@@ -113,9 +121,9 @@
     <form action="/register" method="POST" id="regform" class="container">
         <h2>Register</h2>
         <input type="text" name="uname" placeholder="Name" required>
-        <input type="number" name="uphone" placeholder="Phone" required>
+        <input type="text" name="uphone" placeholder="Phone" required>
         <input type="email" name="uemail" placeholder="Email" required>
-        <input type="password" name="upassword" placeholder="Password" required>
+        <input type="password" name="upassword" id="upassword" placeholder="Password" required>
         <input type="submit" value="Submit">
         <button type="button" onclick="window.location='/'">Login</button>
     </form>

@@ -1,11 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { MongoClient } = require('mongodb');
-const validator = require("email-validator");
 const uri = "mongodb://localhost:27017";
 const client = new MongoClient(uri);
 const path = require('path');
-const { Redirect } = require('twilio/lib/twiml/VoiceResponse');
 const app = express();
 const port = 3000;
 
