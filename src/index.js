@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { MongoClient } = require('mongodb');
 const uri = "mongodb://localhost:27017";
+const dbname = "nodereg";
+const colname = "coll02";
 const client = new MongoClient(uri);
 const path = require('path');
 const app = express();
@@ -31,9 +33,21 @@ function addData(db, body) {
     // console.log("Added data:"+body);
 }
 
+function getData(db, body) {
+    console.log("Data: ");
+    bodyList = [];
+    var result = db.collection(colname).find({"email":body.uemail,"password":body.upassword}).toArray().then((ans) => {
+        console.log("ans: "+ans);
+        console.log(ans[0].name);
+        bodyList = [ans[0].name,ans[0].phone,ans[0].email,ans[0].password];
+        console.log("bodyList: "+bodyList);
+        // res.render('res.html',{bodyData:[ans[0].name,ans[0].phone,ans[0].email,ans[0].password]});
+    });
+}
+
 app.use(bodyParser.urlencoded({ extended: true }), express.static('public'));
 
-app.get('/', (req,res) => {
+app.get('/login', (req,res) => {
     const loginPage = path.resolve('views', 'login.html');
     res.sendFile(loginPage);
 });
@@ -43,12 +57,16 @@ app.get('/register', (req,res) => {
     res.sendFile(filePath);
 });
 
-app.post('/', (req,res) => {
+app.post('/login', (req,res) => {
     client.connect();
     const db = client.db("nodereg");
-    const result = db.collection("coll02").find({"email":req.body.uemail,"password":req.body.upassword}).toArray();
-    // console.log(result);
-    res.render('res.html',{bodyData:[req.body.uname,req.body.uphone,req.body.uemail,req.body.upassword]});
+    // const result = db.collection("coll02").find({"email":req.body.uemail,"password":req.body.upassword}).toArray();
+    // const result = 
+    getData(db, req.body);
+    console.log("body: "+result);
+    body = result.ans[0];
+    // res.render('res.html',{bodyData:[req.body.uname,req.body.uphone,req.body.uemail,req.body.upassword]});
+    res.render('res.html',{bodyData:[body.name,body.phone,body.email,body.password]});
 });
 
 app.engine('html', require('ejs').renderFile);
