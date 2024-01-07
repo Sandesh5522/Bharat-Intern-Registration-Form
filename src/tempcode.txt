@@ -28,3 +28,13 @@ var result = db.collection("coll02").find({"email":body.uemail,"password":body.u
     });
 
 console.log(typeof(ans));
+
+console.log(ans[0].name);
+bodyList = [ans[0].name,ans[0].phone,ans[0].email,ans[0].password];
+console.log("bodyList: "+bodyList);
+
+const result = db.collection("coll02").find({"email":req.body.uemail,"password":req.body.upassword}).toArray();
+
+console.log(req.body.uname, req.body.uphone, req.body.uemail, req.body.upassword);
+
+await client.close();

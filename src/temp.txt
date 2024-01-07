@@ -124,3 +124,6 @@ Model.findOneAndUpdate()
 Model.replaceOne()
 Model.updateMany()
 Model.updateOne()
+
+nodereg01> db.dropDatabase()
+{ ok: 1, dropped: 'nodereg01' }
