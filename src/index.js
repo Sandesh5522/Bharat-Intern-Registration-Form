@@ -31,12 +31,16 @@ function addData(db, body) {
     });
 }
 
-function getData(db, body) {
-    console.log("Data: ");
-    bodyList = [];
-    var result = db.collection(collname).find({"email":body.uemail,"password":body.upassword}).toArray().then((ans) => {
-        console.log("ans: "+ans[0]);
-    });
+async function getData(db, body) {
+    docs = {};
+    query = { email: body.uemail, password: body.upassword };
+    const result = db.collection(collname).find(query, {ordered: true});
+    if((await db.collection(collname)) === 0) {
+        console.log("No document found!!");
+    }
+    for await(doc of result) {
+        docs = doc;
+    }
 }
 
 app.use(bodyParser.urlencoded({ extended: true }), express.static('public'));
@@ -51,11 +55,12 @@ app.get('/register', (req,res) => {
     res.sendFile(filePath);
 });
 
-app.post('/login', (req,res) => {
+app.post('/login', async (req,res) => {
     client.connect();
     const db = client.db(dbname);
-    getData(db, req.body);
-    res.render('res.html',{bodyData:[req.body.uname,req.body.uphone,req.body.uemail,req.body.upassword]});
+    await getData(db, req.body);
+    console.log(docs);
+    res.render('res.html',{bodyData:[docs.name,docs.phone,docs.email,docs.password]});
 });
 
 app.engine('html', require('ejs').renderFile);
